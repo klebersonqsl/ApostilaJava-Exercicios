@@ -1,0 +1,41 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <ui:define name="titulo">Documentos</ui:define>
+
+    <ui:define name="conteudo">
+        <h:form id="envio" enctype="multipart/form-data">
+            <h:outputLabel for="arquivos" value="Enviar arquivos (até 10 MB cada)"/>
+            <h:inputFile id="arquivos" value="#{documentos.arquivos}" multiple="true"/>
+            <h:commandButton value="Enviar" action="#{documentos.enviar}"/>
+        </h:form>
+
+        <h3>Arquivos guardados</h3>
+        <h:form id="arquivosGuardados">
+            <h:dataTable value="#{documentos.lista}" var="d" columnClasses=",,num,"
+                         rendered="#{not empty documentos.lista}">
+                <h:column>
+                    <f:facet name="header">Arquivo</f:facet>
+                    <!-- download: requisição normal (sem ajax) que chama baixar(d) -->
+                    <h:commandLink value="#{d.nome}" action="#{documentos.baixar(d)}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Tipo</f:facet>
+                    #{d.tipo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Tamanho</f:facet>
+                    #{d.tamanhoFormatado}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Enviado em</f:facet>
+                    #{d.dataFormatada}
+                </h:column>
+            </h:dataTable>
+            <h:outputText value="Nenhum documento enviado ainda."
+                          rendered="#{empty documentos.lista}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

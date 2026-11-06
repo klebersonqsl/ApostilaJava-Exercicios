@@ -1,0 +1,25 @@
+<%-- Incluído no início de todas as páginas. Usa a variável "titulo". --%>
+<fmt:setLocale value="pt_BR"/>
+<c:set var="raiz" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>${titulo} - Loja do Curso</title>
+  <link rel="stylesheet" href="${raiz}/css/estilo.css">
+</head>
+<body>
+<header>
+  <h1 style="display:inline">Loja do Curso</h1>
+  <nav>
+    <a href="${raiz}/produtos">Produtos</a>
+    <a href="${raiz}/documentos">Documentos</a>
+  </nav>
+</header>
+<main>
+  <h2>${titulo}</h2>
+  <%-- mensagem "flash": exibida uma única vez e removida da sessão --%>
+  <c:if test="${not empty sessionScope.flash}">
+    <p class="ok"><c:out value="${sessionScope.flash}"/></p>
+    <c:remove var="flash" scope="session"/>
+  </c:if>

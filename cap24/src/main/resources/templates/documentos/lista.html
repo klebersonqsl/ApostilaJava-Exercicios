@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Documentos')}"></head>
+<body>
+<header th:replace="~{fragmentos :: cabecalho}"></header>
+<main>
+    <h2>Documentos</h2>
+    <div th:replace="~{fragmentos :: mensagens}"></div>
+
+    <form method="post" th:action="@{/documentos}" enctype="multipart/form-data">
+        <label for="arquivos">Enviar arquivos (até 10 MB cada)</label>
+        <input id="arquivos" name="arquivos" type="file" multiple>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <h3>Arquivos guardados</h3>
+    <p th:if="${documentos.isEmpty()}">Nenhum documento enviado ainda.</p>
+    <table th:unless="${documentos.isEmpty()}">
+        <tr><th>Arquivo</th><th>Tipo</th><th class="num">Tamanho</th>
+            <th>Enviado em</th></tr>
+        <tr th:each="d : ${documentos}">
+            <td><a th:href="@{/documentos/{id}/baixar(id=${d.id})}"
+                   th:text="${d.nome}"></a></td>
+            <td th:text="${d.tipo}"></td>
+            <td class="num" th:text="${d.tamanho < 1024} ? |${d.tamanho} bytes|
+                    : |${#numbers.formatDecimal(d.tamanho / 1024.0, 1, 1)} KB|"></td>
+            <td th:text="${#temporals.format(d.enviadoEm, 'dd/MM/yyyy HH:mm')}"></td>
+        </tr>
+    </table>
+</main>
+<footer th:replace="~{fragmentos :: rodape}"></footer>
+</body>
+</html>

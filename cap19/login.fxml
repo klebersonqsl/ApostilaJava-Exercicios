@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- fx:controller liga este arquivo à classe que trata os eventos -->
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="LoginController"
+      styleClass="painel" spacing="10" prefWidth="320">
+    <padding><Insets top="24" right="28" bottom="24" left="28"/></padding>
+
+    <Label text="Acesso ao sistema" styleClass="titulo"/>
+    <Label text="Usuário"/>
+    <TextField fx:id="usuario" promptText="seu.usuario"/>
+    <Label text="Senha"/>
+    <PasswordField fx:id="senha" onAction="#entrar"/>
+    <Button text="Entrar" onAction="#entrar" defaultButton="true" maxWidth="Infinity"
+            styleClass="principal"/>
+    <Label fx:id="mensagem" styleClass="mensagem"/>
+</VBox>

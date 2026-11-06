@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<!-- usada automaticamente pelo Spring Boot para qualquer resposta 404 -->
+<head th:replace="~{fragmentos :: head('Página não encontrada')}"></head>
+<body>
+<header th:replace="~{fragmentos :: cabecalho}"></header>
+<main>
+    <h2>Página não encontrada</h2>
+    <p class="erro">O endereço <code th:text="${path}"></code> não existe.</p>
+    <a class="botao" th:href="@{/produtos}">Voltar aos produtos</a>
+</main>
+<footer th:replace="~{fragmentos :: rodape}"></footer>
+</body>
+</html>

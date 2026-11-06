@@ -1,0 +1,25 @@
+/* folha de estilos aplicada à cena */
+.root {
+    -fx-font-family: "DejaVu Sans", "Segoe UI", sans-serif;
+    -fx-font-size: 13px;
+}
+.painel {
+    -fx-background-color: linear-gradient(to bottom, #f7f9fc, #e6edf6);
+}
+.titulo {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b3a5c;
+}
+.principal {
+    -fx-background-color: #2f6db5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 8 0 8 0;
+}
+.principal:hover {
+    -fx-background-color: #24569a;
+}
+.mensagem.erro { -fx-text-fill: #b3261e; }
+.mensagem.ok { -fx-text-fill: #2e7d32; }

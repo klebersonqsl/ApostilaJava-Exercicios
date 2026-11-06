@@ -1,0 +1,11 @@
+/* Tema claro: cores próximas às do Windows */
+.root {
+    -fx-base: #f0f0f0;
+    -fx-accent: #2f6db5;
+}
+.barra-status {
+    -fx-background-color: #dfe3e8;
+}
+.barra-status .label {
+    -fx-text-fill: #333333;
+}

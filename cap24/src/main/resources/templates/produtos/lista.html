@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Produtos')}"></head>
+<body>
+<header th:replace="~{fragmentos :: cabecalho}"></header>
+<main>
+    <h2>Produtos</h2>
+    <div th:replace="~{fragmentos :: mensagens}"></div>
+
+    <form class="busca" method="get" th:action="@{/produtos}">
+        <input type="search" name="q" th:value="${q}"
+               placeholder="Buscar por nome ou categoria">
+        <button type="submit">Buscar</button>
+        <a class="botao secundario" th:href="@{/produtos/novo}">+ Novo produto</a>
+    </form>
+
+    <p class="erro" th:if="${produtos.isEmpty()}">
+        Nenhum produto encontrado para "<span th:text="${q}"></span>".</p>
+
+    <table th:unless="${produtos.isEmpty()}">
+        <tr><th>Foto</th><th>Produto</th><th>Categoria</th>
+            <th class="num">Preço</th><th class="num">Estoque</th><th></th></tr>
+        <tr th:each="p : ${produtos}">
+            <td>
+                <img class="miniatura" th:if="${p.temFoto}" alt=""
+                     th:src="@{/produtos/{id}/foto(id=${p.id})}">
+                <div class="miniatura" th:unless="${p.temFoto}"></div>
+            </td>
+            <td th:text="${p.nome}">Caneca</td>
+            <td th:text="${p.categoria}">Cozinha</td>
+            <td class="num" th:text="${#numbers.formatCurrency(p.preco)}">R$ 10,00</td>
+            <td class="num" th:classappend="${p.estoque < 10} ? 'baixo'"
+                th:text="${p.estoque}">5</td>
+            <td class="acoes">
+                <a class="botao secundario"
+                   th:href="@{/produtos/{id}/editar(id=${p.id})}">Editar</a>
+                <form method="post" th:action="@{/produtos/{id}/excluir(id=${p.id})}"
+                      onsubmit="return confirm('Excluir este produto?')">
+                    <button class="perigo">Excluir</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <p th:text="|${produtos.size()} produto(s).|">0 produto(s).</p>
+</main>
+<footer th:replace="~{fragmentos :: rodape}"></footer>
+</body>
+</html>

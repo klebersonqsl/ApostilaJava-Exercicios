@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscrição</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<header><h1>Semana de Tecnologia</h1></header>
+<main>
+  <h2>Formulário de inscrição</h2>
+  <!-- method="post": os dados vão no corpo da requisição, não na URL.
+       novalidate desliga a validação do navegador para testarmos a do servidor -->
+  <form action="inscricao" method="post" novalidate>
+    <label for="nome">Nome completo</label>
+    <input id="nome" name="nome">
+
+    <label for="email">E-mail</label>
+    <input id="email" name="email" type="email">
+
+    <label for="trilha">Trilha</label>
+    <select id="trilha" name="trilha">
+      <option>Java</option>
+      <option>Banco de dados</option>
+      <option>Front-end</option>
+    </select>
+
+    <label><input type="checkbox" name="certificado" value="sim"
+                  style="width:auto"> Quero certificado</label>
+    <button type="submit">Inscrever-se</button>
+  </form>
+</main>
+</body>
+</html>

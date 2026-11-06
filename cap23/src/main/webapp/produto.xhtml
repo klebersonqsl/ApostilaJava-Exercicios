@@ -1,0 +1,70 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:a="jakarta.faces.passthrough">
+
+    <!-- lê ?id=3 da URL e carrega o produto antes de montar a página -->
+    <ui:define name="metadados">
+        <f:metadata>
+            <f:viewParam name="id" value="#{produtoForm.id}"/>
+            <f:viewAction action="#{produtoForm.carregar}"/>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="titulo">
+        #{empty produtoForm.produto.id ? 'Novo produto' : 'Editar produto'}
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <!-- multipart/form-data: obrigatório para o envio da foto -->
+        <h:form id="form" enctype="multipart/form-data">
+
+            <h:outputLabel for="nome" value="Nome"/>
+            <h:inputText id="nome" value="#{produtoForm.produto.nome}" label="Nome"/>
+            <h:message for="nome" styleClass="campo-erro"/>
+
+            <div class="linha">
+                <div>
+                    <h:outputLabel for="categoria" value="Categoria"/>
+                    <h:selectOneMenu id="categoria"
+                                     value="#{produtoForm.produto.categoria}">
+                        <f:selectItem itemLabel="Selecione..." noSelectionOption="true"/>
+                        <f:selectItems value="#{produtoForm.categorias}"/>
+                    </h:selectOneMenu>
+                    <h:message for="categoria" styleClass="campo-erro"/>
+                </div>
+                <div>
+                    <h:outputLabel for="preco" value="Preço (R$)"/>
+                    <h:inputText id="preco" value="#{produtoForm.produto.preco}"
+                                 label="Preço" a:inputmode="decimal">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </h:inputText>
+                    <h:message for="preco" styleClass="campo-erro"/>
+                </div>
+                <div>
+                    <h:outputLabel for="estoque" value="Estoque"/>
+                    <h:inputText id="estoque" value="#{produtoForm.produto.estoque}"
+                                 label="Estoque" required="true"/>
+                    <h:message for="estoque" styleClass="campo-erro"/>
+                </div>
+            </div>
+
+            <h:outputLabel for="foto" value="Foto"/>
+            <h:panelGroup rendered="#{produtoForm.produto.temFoto}">
+                <h:graphicImage value="/foto?id=#{produtoForm.produto.id}"
+                                styleClass="foto-atual"/>
+                <br/><small>Escolha um arquivo apenas se quiser trocar a foto.</small>
+            </h:panelGroup>
+            <h:inputFile id="foto" value="#{produtoForm.foto}" a:accept="image/*"
+                         validator="#{produtoForm.validarFoto}"/>
+            <h:message for="foto" styleClass="campo-erro"/>
+
+            <div>
+                <h:commandButton value="Salvar" action="#{produtoForm.salvar}"/>
+                <!-- h:button faz um GET: volta sem enviar nem validar o formulário -->
+                <h:button value="Cancelar" outcome="produtos" styleClass="secundario"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

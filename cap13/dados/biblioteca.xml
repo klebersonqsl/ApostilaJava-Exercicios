@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<biblioteca cidade="Recife">
+    <livro id="1" disponivel="true">
+        <titulo>Dom Casmurro</titulo>
+        <autor>Machado de Assis</autor>
+        <ano>1899</ano>
+        <preco>29.90</preco>
+    </livro>
+    <livro id="2" disponivel="false">
+        <titulo>Vidas Secas</titulo>
+        <autor>Graciliano Ramos</autor>
+        <ano>1938</ano>
+        <preco>42.50</preco>
+    </livro>
+    <livro id="3" disponivel="true">
+        <titulo>Quincas Borba</titulo>
+        <autor>Machado de Assis</autor>
+        <ano>1891</ano>
+        <preco>31.00</preco>
+    </livro>
+</biblioteca>

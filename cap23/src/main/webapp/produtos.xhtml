@@ -1,0 +1,70 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:a="jakarta.faces.passthrough">
+
+    <ui:define name="titulo">Produtos</ui:define>
+
+    <ui:define name="conteudo">
+        <h:form id="lista">
+            <div class="busca">
+                <!-- a cada tecla (após 300 ms de pausa): busca e redesenha -->
+                <h:inputText id="filtro" value="#{produtos.filtro}"
+                             a:placeholder="Buscar por nome ou categoria">
+                    <f:ajax event="keyup" delay="300" listener="#{produtos.buscar}"
+                            render="resultado"/>
+                </h:inputText>
+                <h:button outcome="produto" value="+ Novo produto"
+                          styleClass="secundario"/>
+            </div>
+
+            <h:panelGroup id="resultado" layout="block">
+                <h:dataTable id="tabela" value="#{produtos.lista}" var="p"
+                             rendered="#{not empty produtos.lista}"
+                             columnClasses=",,,num,num,acoes">
+                    <h:column>
+                        <f:facet name="header">Foto</f:facet>
+                        <h:graphicImage value="/foto?id=#{p.id}" styleClass="miniatura"
+                                        rendered="#{p.temFoto}"/>
+                        <h:panelGroup layout="block" styleClass="miniatura"
+                                      rendered="#{not p.temFoto}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Produto</f:facet>
+                        #{p.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Categoria</f:facet>
+                        #{p.categoria}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Preço</f:facet>
+                        <h:outputText value="#{p.preco}">
+                            <f:convertNumber type="currency" currencySymbol="R$"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Estoque</f:facet>
+                        <h:outputText value="#{p.estoque}"
+                                      styleClass="#{p.estoque lt 10 ? 'baixo' : ''}"/>
+                    </h:column>
+                    <h:column>
+                        <h:link outcome="produto" value="Editar"
+                                styleClass="botao secundario">
+                            <f:param name="id" value="#{p.id}"/>
+                        </h:link>
+                        <h:commandButton value="Excluir" styleClass="perigo"
+                                         action="#{produtos.excluir(p)}"
+                                         onclick="return confirm('Excluir?')">
+                            <f:ajax render="@form :avisos"/>
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+                <h:outputText value="Nenhum produto encontrado." styleClass="erro"
+                              rendered="#{empty produtos.lista}"/>
+                <p>#{produtos.lista.size()} produto(s).</p>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

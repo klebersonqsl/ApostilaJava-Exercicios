@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Produto')}"></head>
+<body>
+<header th:replace="~{fragmentos :: cabecalho}"></header>
+<main>
+    <h2 th:text="${produto.id == null} ? 'Novo produto' : 'Editar produto'">Produto</h2>
+
+    <!-- th:object liga o formulário ao objeto "produto" do modelo -->
+    <form th:action="@{/produtos/salvar}" th:object="${produto}" method="post"
+          enctype="multipart/form-data">
+
+        <p class="erro" th:if="${#fields.hasErrors('*')}"
+           th:text="|Corrija os ${#fields.errors('*').size()} campo(s) abaixo.|"></p>
+
+        <input type="hidden" th:field="*{id}">
+
+        <label for="nome">Nome</label>
+        <input th:field="*{nome}">
+        <span class="campo-erro" th:errors="*{nome}"></span>
+
+        <div class="linha">
+            <div>
+                <label for="categoria">Categoria</label>
+                <select th:field="*{categoria}">
+                    <option value="">Selecione...</option>
+                    <option th:each="c : ${categorias}" th:value="${c}"
+                            th:text="${c}"></option>
+                </select>
+                <span class="campo-erro" th:errors="*{categoria}"></span>
+            </div>
+            <div>
+                <label for="preco">Preço (R$)</label>
+                <input th:field="*{preco}" inputmode="decimal">
+                <span class="campo-erro" th:errors="*{preco}"></span>
+            </div>
+            <div>
+                <label for="estoque">Estoque</label>
+                <input th:field="*{estoque}">
+                <span class="campo-erro" th:errors="*{estoque}"></span>
+            </div>
+        </div>
+
+        <label for="arquivo">Foto</label>
+        <th:block th:if="*{temFoto}">
+            <img class="foto-atual" th:src="@{/produtos/{id}/foto(id=*{id})}" alt="">
+            <br><small>Escolha um arquivo apenas se quiser trocar a foto.</small>
+        </th:block>
+        <input id="arquivo" name="arquivo" type="file" accept="image/*">
+        <span class="campo-erro" th:errors="*{foto}"></span>
+
+        <div>
+            <button type="submit">Salvar</button>
+            <a class="botao secundario" th:href="@{/produtos}">Cancelar</a>
+        </div>
+    </form>
+</main>
+<footer th:replace="~{fragmentos :: rodape}"></footer>
+</body>
+</html>

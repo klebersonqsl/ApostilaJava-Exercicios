@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<!-- Trechos reaproveitados por todas as páginas (th:fragment) -->
+
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <title th:text="|${titulo} - Loja do Curso|">Loja do Curso</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+
+<body>
+<header th:fragment="cabecalho">
+    <h1 style="display:inline">Loja do Curso</h1>
+    <nav>
+        <a th:href="@{/produtos}">Produtos</a>
+        <a th:href="@{/documentos}">Documentos</a>
+        <a th:href="@{/api/produtos}">API</a>
+    </nav>
+</header>
+
+<!-- mensagens "flash" vindas de um redirect:... -->
+<div th:fragment="mensagens">
+    <p class="ok" th:if="${mensagem}" th:text="${mensagem}"></p>
+    <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+</div>
+
+<footer th:fragment="rodape" style="text-align:center; color:#777; font-size:13px;
+                                     margin-bottom:20px">
+    Loja do Curso &middot; Spring Boot e Spring MVC
+</footer>
+</body>
+</html>

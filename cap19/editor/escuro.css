@@ -1,0 +1,15 @@
+/* Tema escuro: o Modena (visual padrão) calcula quase todas as cores a partir destas */
+.root {
+    -fx-base: #2d2d30;
+    -fx-background: #1e1e1e;
+    -fx-control-inner-background: #252526;
+    -fx-accent: #3d7bd6;
+    -fx-focus-color: #3d7bd6;
+    -fx-faint-focus-color: transparent;
+}
+.barra-status {
+    -fx-background-color: #007acc;
+}
+.barra-status .label {
+    -fx-text-fill: white;
+}
